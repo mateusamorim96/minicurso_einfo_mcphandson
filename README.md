@@ -3,6 +3,8 @@
 Material completo do minicurso de 4 horas **MCP Hands-on**, com teoria, código
 executável, testes ponta a ponta e configurações de hosts reais.
 
+**Facilitadores:** Mateus Silva, Mariana Lima e Gabriel Bezerra.
+
 O laboratório constrói o **AgroMCP**, um servidor MCP de monitoramento agrícola
 que expõe talhões, leituras de sensores, recomendações de irrigação e um catálogo
 agronômico. O domínio é fictício, mas o desenho é o mesmo de um servidor de

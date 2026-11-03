@@ -16,12 +16,14 @@ trap 'rm -rf "$TMP"' EXIT
 ---
 title: "MCP Hands-on: Expandindo o alcance de LLMs"
 subtitle: "Apostila do participante — AgroMCP"
-author: "Mateus Silva"
+author: "Mateus Silva, Mariana Lima e Gabriel Bezerra"
 date: "2026"
 lang: pt-BR
 ---
 
 EOF
+  cat "$RAIZ/conteudo/00-facilitadores.md"
+  printf '\n\\newpage\n\n'
   cat "$RAIZ/conteudo/01-fundamentos.md"
   printf '\n\\newpage\n\n'
   cat "$RAIZ/conteudo/02-servidor.md"
