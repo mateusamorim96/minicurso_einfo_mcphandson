@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "agro": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--frozen",
+        "--directory",
+        "/CAMINHO/ABSOLUTO/PROJETO",
+        "python",
+        "-m",
+        "minicurso_einfo_mcphandson",
+        "serve"
+      ],
+      "env": {
+        "AGRO_DB_PATH": "/CAMINHO/ABSOLUTO/PROJETO/data/agro.db"
+      }
+    }
+  }
+}

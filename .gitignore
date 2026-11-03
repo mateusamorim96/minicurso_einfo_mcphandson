@@ -1,0 +1,32 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Artefatos de teste e banco local do laboratório
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+data/*.db
+data/*.db-journal
+
+# Artefatos LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+
+# Material exclusivo do facilitador e ficha executiva (apenas local)
+conteudo/00-guia-do-facilitador.md
+guia-do-facilitador.pdf
+minicurso.tex
+minicurso.pdf

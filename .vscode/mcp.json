@@ -1,0 +1,21 @@
+{
+  "servers": {
+    "agro": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "--frozen",
+        "--directory",
+        "${workspaceFolder}",
+        "python",
+        "-m",
+        "minicurso_einfo_mcphandson",
+        "serve"
+      ],
+      "env": {
+        "AGRO_DB_PATH": "${workspaceFolder}/data/agro.db"
+      }
+    }
+  }
+}

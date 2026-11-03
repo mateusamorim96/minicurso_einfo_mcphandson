@@ -1,0 +1,19 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "servers": {
+      "agro": {
+        "type": "local",
+        "command": [
+          "uv",
+          "run",
+          "--frozen",
+          "python",
+          "-m",
+          "minicurso_einfo_mcphandson",
+          "serve"
+        ]
+      }
+    }
+  }
+}

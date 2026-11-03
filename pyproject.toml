@@ -1,0 +1,41 @@
+[project]
+name = "minicurso-einfo-mcphandson"
+version = "0.1.0"
+description = "Laboratório do minicurso MCP Hands-on: servidor AgroMCP, cliente e testes"
+readme = "README.md"
+authors = [
+    { name = "Mateus Silva", email = "mateus.silva@prof.facape.br" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "mcp[cli]>=2.3,<3",
+    "pydantic>=2.12",
+]
+
+[project.optional-dependencies]
+# Integração com agentes LangChain (Módulo 3). É opcional para manter o
+# laboratório principal enxuto; no Docker do curso já vem instalada.
+agent = [
+    "langchain[mcp]>=1.4,<2",
+]
+
+[project.scripts]
+minicurso-einfo-mcphandson = "minicurso_einfo_mcphandson:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.coverage.run]
+branch = true
+source = ["minicurso_einfo_mcphandson"]
+
+[build-system]
+requires = ["uv_build>=0.13.6,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9",
+    "pytest-cov>=7",
+]
