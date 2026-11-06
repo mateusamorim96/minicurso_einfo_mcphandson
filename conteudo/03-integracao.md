@@ -69,7 +69,9 @@ http = httpx2.AsyncClient(
     headers={"Authorization": "Bearer ..."},
     timeout=httpx2.Timeout(30, read=300),
 )
-transport = streamable_http_client("https://exemplo.com/mcp", http_client=http)
+transport = streamable_http_client(
+    "https://exemplo.com/mcp", http_client=http
+)
 
 async with http:
     async with Client(transport) as client:

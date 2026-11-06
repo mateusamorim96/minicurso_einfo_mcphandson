@@ -10,7 +10,8 @@ uv sync --extra agent
 # servidor
 uv run python -m minicurso_einfo_mcphandson serve
 uv run python -m minicurso_einfo_mcphandson serve --http --port 8000
-uv run python -m minicurso_einfo_mcphandson serve --http --port 8000 --token segredo-lab
+uv run python -m minicurso_einfo_mcphandson serve --http --port 8000 \
+  --token segredo-lab
 uv run mcp dev examples/hello_server.py
 uv run mcp dev examples/esqueleto_server.py
 uv run mcp run examples/agro_server.py
@@ -20,9 +21,12 @@ uv run mcp install examples/agro_server.py --name "AgroMCP"
 uv run python -m minicurso_einfo_mcphandson client demo
 uv run python -m minicurso_einfo_mcphandson client tools
 uv run python -m minicurso_einfo_mcphandson client --stdio demo
-uv run python -m minicurso_einfo_mcphandson client --url http://127.0.0.1:8000/mcp demo
-uv run python -m minicurso_einfo_mcphandson client --url http://127.0.0.1:8000/mcp --token segredo-lab demo
-uv run python -m minicurso_einfo_mcphandson client call listar_talhoes '{"status":"atencao"}'
+uv run python -m minicurso_einfo_mcphandson client \
+  --url http://127.0.0.1:8000/mcp demo
+uv run python -m minicurso_einfo_mcphandson client \
+  --url http://127.0.0.1:8000/mcp --token segredo-lab demo
+uv run python -m minicurso_einfo_mcphandson client call listar_talhoes \
+  '{"status":"atencao"}'
 
 # testes
 uv run pytest -q
@@ -31,7 +35,8 @@ uv run pytest --cov=minicurso_einfo_mcphandson --cov-report=term-missing
 
 # hosts
 opencode mcp list
-opencode mcp add agro -- uv run --frozen python -m minicurso_einfo_mcphandson serve
+opencode mcp add agro -- \
+  uv run --frozen python -m minicurso_einfo_mcphandson serve
 ```
 
 ## Imports que importam (SDK 2.x)
@@ -47,7 +52,9 @@ from mcp.server.mcpserver.exceptions import (
     ResourceError,
     ResourceNotFoundError,
 )
-from mcp.server.mcpserver.prompts.base import UserMessage, AssistantMessage, Message
+from mcp.server.mcpserver.prompts.base import (
+    UserMessage, AssistantMessage, Message,
+)
 from mcp.types import ElicitResult, ToolAnnotations
 from mcp.client.streamable_http import streamable_http_client
 ```
@@ -59,6 +66,7 @@ from mcp.client.streamable_http import streamable_http_client
 ```python
 from mcp.server import MCPServer
 from mcp.server.mcpserver import Context
+from mcp.types import ToolAnnotations
 from pydantic import BaseModel, Field
 from typing import Annotated, Literal
 
@@ -92,7 +100,8 @@ def meu_prompt(tema: str) -> str:
 
 
 if __name__ == "__main__":
-    mcp.run()  # stdio; para HTTP: mcp.run(transport="streamable-http", port=8000)
+    # stdio; para HTTP: mcp.run(transport="streamable-http", port=8000)
+    mcp.run()
 ```
 
 ## Erros
@@ -122,7 +131,9 @@ app = ctx.request_context.lifespan_context
 from mcp import Client
 from meu_servidor import create_server
 
-async with Client(create_server(tmp_path / "t.db"), raise_exceptions=True) as c:
+async with Client(
+    create_server(tmp_path / "t.db"), raise_exceptions=True
+) as c:
     result = await c.call_tool("minha_tool", {"nome": "x"})
     assert not result.is_error
     assert result.structured_content["valor"] == 42

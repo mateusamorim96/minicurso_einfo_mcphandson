@@ -9,15 +9,15 @@ O servidor do laboratório é deliberadamente pequeno, mas cobre o ciclo complet
 
 ```text
 Host (OpenCode / VS Code / LangChain)
-        │  stdio ou Streamable HTTP
-        ▼
-┌───────────────────────────── AgroMCP ─────────────────────────────┐
-│  MCPServer + lifespan                                              │
-│  ├─ Tools: listar, consultar, recomendar, diagnosticar, registrar │
-│  ├─ Resources: talhões, template por ID, catálogo, guia, resumo   │
-│  ├─ Prompts: análise, plano de irrigação, triagem                 │
-│  └─ SQLite (schema + seed determinístico)                         │
-└───────────────────────────────────────────────────────────────────┘
+        |  stdio ou Streamable HTTP
+        v
++----------------------------- AgroMCP ------------------------------+
+|  MCPServer + lifespan                                              |
+|  +-- Tools: listar, consultar, recomendar, diagnosticar, registrar |
+|  +-- Resources: talhões, template por ID, catálogo, guia, resumo   |
+|  +-- Prompts: análise, plano de irrigação, triagem                 |
+|  +-- SQLite (schema + seed determinístico)                         |
++--------------------------------------------------------------------+
 ```
 
 Decisões de projeto que valem discussão:
@@ -154,7 +154,8 @@ server = MCPServer(
 Para testar no terminal:
 
 ```bash
-uv run python -m minicurso_einfo_mcphandson serve --http --port 8000 --token segredo-lab
+uv run python -m minicurso_einfo_mcphandson serve --http --port 8000 \
+  --token segredo-lab
 # em outro terminal:
 uv run python -m minicurso_einfo_mcphandson client \
   --url http://127.0.0.1:8000/mcp --token segredo-lab demo
@@ -213,7 +214,8 @@ WORKDIR /app
 COPY pyproject.toml uv.lock ./
 COPY src ./src
 RUN uv sync --frozen --no-dev --extra agent
-CMD ["uv", "run", "--frozen", "python", "-m", "minicurso_einfo_mcphandson", "serve", "--http"]
+CMD ["uv", "run", "--frozen", "python", "-m", \
+     "minicurso_einfo_mcphandson", "serve", "--http"]
 ```
 
 Checklist de release:

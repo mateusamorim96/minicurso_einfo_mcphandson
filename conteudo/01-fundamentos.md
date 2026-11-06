@@ -28,12 +28,12 @@ OpenCode, LangChain ou um script Python.
 ## 1.2 Arquitetura: host, cliente e servidor
 
 ```text
-┌──────────────────────────── Host (aplicação de IA) ────────────────────────────┐
-│  Interface  ·  orquestração do LLM  ·  política de permissões  ·  auditoria     │
-│                                                                                 │
-│   MCP Client A ◄──── conexão dedicada ────► MCP Server A (stdio, local)         │
-│   MCP Client B ◄──── conexão dedicada ────► MCP Server B (HTTP, remoto)        │
-└─────────────────────────────────────────────────────────────────────────────────┘
++-------------------------- Host (aplicação de IA) --------------------------+
+| Interface - orquestração do LLM - política de permissões - auditoria       |
+|                                                                            |
+|  MCP Client A <---- conexão dedicada ----> MCP Server A (stdio, local)     |
+|  MCP Client B <---- conexão dedicada ----> MCP Server B (HTTP, remoto)     |
++----------------------------------------------------------------------------+
 ```
 
 - **Host**: a aplicação que o usuário usa (Claude Desktop, VS Code, OpenCode,

@@ -96,7 +96,7 @@ def consultar_talhao(
     ],
     ctx: Context,
 ) -> TalhaoDetalhe:
-    """Retorna a ficha completa de um talhão, incluindo as últimas leituras."""
+    """Retorna a ficha completa de um talhão e suas últimas leituras."""
     return _talhao_ou_erro(ctx, talhao_id)
 ```
 
@@ -201,7 +201,10 @@ Um resource fixo:
     description="Lista resumida de todos os talhões, em JSON.",
 )
 def recurso_talhoes() -> str:
-    dados = [t.model_dump(mode="json") for t in AgroDB(caminho_banco).listar_talhoes()]
+    dados = [
+        t.model_dump(mode="json")
+        for t in AgroDB(caminho_banco).listar_talhoes()
+    ]
     return json.dumps(dados, ensure_ascii=False, indent=2)
 ```
 
@@ -223,7 +226,8 @@ O `{talhao_id}` do URI **precisa** casar com o parâmetro `talhao_id`. Se você
 renomear um dos dois, o servidor falha no import:
 
 ```text
-ValueError: Mismatch between URI parameters {'talhao_id'} and function parameters {'talhao'}
+ValueError: Mismatch between URI parameters {'talhao_id'}
+           and function parameters {'talhao'}
 ```
 
 ### Uma pegadinha real do SDK 2.3
@@ -281,7 +285,9 @@ def analise_talhao(talhao_id: str, foco: str = "irrigação") -> list[Message]:
 Um parâmetro anotado como `Context` é injetado e **não aparece no schema**:
 
 ```python
-async def diagnosticar_talhao(talhao_id: str, ctx: Context) -> DiagnosticoTalhao:
+async def diagnosticar_talhao(
+    talhao_id: str, ctx: Context
+) -> DiagnosticoTalhao:
     await ctx.report_progress(0.1, 1.0, "Carregando catálogo")
     catalogo = await _ler_catalogo(ctx)
     ...
@@ -366,7 +372,8 @@ def _confirmar_alta_severidade(
 ) -> ConfirmacaoObservacao | Elicit[ConfirmacaoObservacao]:
     if severidade == "alta":
         return Elicit(
-            f"Confirmar registro de observação de ALTA severidade no talhão {talhao_id}?",
+            "Confirmar registro de observação de ALTA severidade "
+            f"no talhão {talhao_id}?",
             ConfirmacaoObservacao,
         )
     return ConfirmacaoObservacao(confirmado=True, responsavel="automático")
@@ -384,7 +391,9 @@ async def registrar_observacao(
     ctx: Context,
 ) -> ObservacaoRegistrada:
     if not confirmacao.confirmado:
-        raise ToolError("Gravação cancelada: o responsável não confirmou a operação.")
+        raise ToolError(
+            "Gravação cancelada: o responsável não confirmou a operação."
+        )
     ...
 ```
 
@@ -463,7 +472,9 @@ from minicurso_einfo_mcphandson.server import create_server
 async def test_listar():
     server = create_server(tmp_path / "teste.db")
     async with Client(server, raise_exceptions=True) as client:
-        result = await client.call_tool("listar_talhoes", {"status": "atencao"})
+        result = await client.call_tool(
+            "listar_talhoes", {"status": "atencao"}
+        )
         assert not result.is_error
         assert {t["id"] for t in result.structured_content["result"]} == {
             "T-002", "T-005"

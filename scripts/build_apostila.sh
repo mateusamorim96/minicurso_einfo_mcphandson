@@ -11,6 +11,28 @@ SAIDA_FACILITADOR="$RAIZ/guia-do-facilitador.pdf"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
+# Comandos muito longos em blocos de código são cortados na margem do PDF.
+# O build falha cedo para forçar a quebra manual (ou o uso de "\" no shell).
+python3 - "$RAIZ/conteudo" <<'PY'
+import pathlib
+import sys
+
+limite = 78
+ruins = []
+for arquivo in sorted(pathlib.Path(sys.argv[1]).glob("*.md")):
+    dentro = False
+    for numero, linha in enumerate(arquivo.read_text().splitlines(), 1):
+        if linha.startswith("```"):
+            dentro = not dentro
+            continue
+        if dentro and len(linha) > limite:
+            ruins.append(f"{arquivo.name}:{numero} ({len(linha)} colunas)")
+if ruins:
+    print("Linhas de código longas demais para a apostila:", file=sys.stderr)
+    print("\n".join(f"  - {item}" for item in ruins), file=sys.stderr)
+    sys.exit(1)
+PY
+
 {
   cat <<'EOF'
 ---
