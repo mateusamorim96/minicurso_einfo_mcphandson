@@ -33,8 +33,8 @@ from mcp.server.mcpserver.prompts.base import AssistantMessage, Message, UserMes
 from mcp.types import ToolAnnotations
 from pydantic import Field
 
-from .db import CULTURAS, AgroDB
-from .models import (
+from minicurso_einfo_mcphandson.db import CULTURAS, AgroDB
+from minicurso_einfo_mcphandson.models import (
     ConfirmacaoObservacao,
     Cultura,
     DiagnosticoTalhao,
